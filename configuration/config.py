@@ -22,8 +22,8 @@ class Config:
     # attribute
     name = "Dataminator"
     version = {
-        "major" : 1,
-        "medium" : 0,
-        "minor" : 0,
-        "submin" : 0
+        "major" : 1,    # very important changes
+        "medium" : 0,   # feature changes
+        "minor" : 0,    # minor changes
+        "submin" : 4    # file changes
     }
