@@ -5,7 +5,7 @@ Basic configuration of the program.
 
 Author : DrLarck
 
-Last update : 21/12/19 (DrLarck)
+Last update : 24/12/19 (DrLarck)
 """
 
 class Config:
@@ -25,5 +25,5 @@ class Config:
         "major" : 1,    # very important changes
         "medium" : 0,   # feature changes
         "minor" : 0,    # minor changes
-        "submin" : 4    # file changes
+        "submin" : 8    # file changes
     }

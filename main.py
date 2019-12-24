@@ -7,12 +7,13 @@ Author : DrLarck
 
 Birth : 21/12/19
 
-Last update : 21/12/19 (DrLarck)
+Last update : 24/12/19 (DrLarck)
 """
 
 # dependancies
 from configuration.config import Config
 from utility.display import Util_display
+from utility.database_handler import Database_handler
 
 class Main:
     """
@@ -65,6 +66,7 @@ class Main:
         stop = False
         config_ = Config()
         version = config_.version
+        database_handler = Database_handler()
 
         # text menu
         menu_display = f"Welcome to {config_.name} v{version['major']}.{version['medium']}.{version['minor']}.{version['submin']}.\n\nChoose an action :"
@@ -72,6 +74,7 @@ class Main:
         while not stop:
             self.display.clear_display()
             print(menu_display)
+            database_handler.connect()
 
         return
 
