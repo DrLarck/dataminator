@@ -26,11 +26,17 @@ class Database_handler:
 
     `password` (str) : The required password to allow the connection to the database.
 
-    `host` (str) : The host adress.
+    `host` (str) : The host address.
 
     `port` (str) : By default `'5432'`.
 
-    `connection` (psycopg2.connection) : Represents a database session. `None` if there is no session.
+    - Method :
+
+    `reset_db_info()` : `None` - Reset the db info.
+    
+    `get_db_info()` : `None` - Ask for the user to give info about the database he wants to connect.
+
+    `connection()` : `psycopg2.connection` - Represents a database session. `None` if there is no session.
     """
 
     # attribute
@@ -42,6 +48,95 @@ class Database_handler:
     connection = None
 
     # method
+    def reset_db_info(self):
+        """
+        Reset the informations about the database and close the connection.
+
+        --
+
+        Return : `None`
+        """
+
+        self.name, self.user, self.password, self.host, self.port = "", "", "", "", "5432"
+
+        if not self.connection is None:
+            self.connection.close()
+            self.connection = None
+        
+        return
+
+    def get_db_info(self):
+        """
+        Get the connection informations.
+
+        --
+
+        Return : `None`
+        """
+
+        # init
+        self.reset_db_info()
+        clear = False
+        name_ok, user_ok, password_ok, host_ok, port_ok = False, False, False, False, False
+
+        input_name, input_user, input_host, input_port = "", "", "", ""
+
+        while not clear:
+            # ask for the db name
+            if not name_ok:
+                while not name_ok:
+                    input_name = input("Enter the name of the database you want to connect to : ")
+
+                    if not input_name is "":
+                        name_ok = True
+                    
+                    else:
+                        print("Please enter the name of the database you want to connect to.")
+                        time.sleep(5)
+            
+            # ask for the db user
+            if not user_ok:
+                while not user_ok:
+                    input_user = input(f"Enter the name of the user for the database {self.name} : ")
+
+                    if not input_user is "":
+                        user_ok = True
+                    
+                    else:
+                        print(f"Please enter a user name for the database {self.name}.")
+            
+            # ask for password
+            if not password_ok:
+                input_password = input("Enter the password : ")
+                password_ok = True
+            
+            # ask for the host
+            if not host_ok:
+                input_host = input(f"Enter the host address : ")
+
+                host_ok = True
+
+            # ask for the port
+            if not port_ok:
+                input_port = input("By default the port is '5432', leave it blank if you don't want to change it : ")
+
+                if input_port is "":
+                    input_port = "5432"
+                
+                port_ok = True
+            
+            if(name_ok == True and user_ok == True and password_ok == True and host_ok == True and port_ok == True):
+                clear = True
+            
+        # set the info
+        self.name = input_name
+        self.user = input_user
+        self.password = input_password
+        self.host = input_host
+        self.port = input_port
+
+        return
+
     def connect(self):
         """
         Create the connection to the database.
@@ -112,7 +207,7 @@ class Database_handler:
 
                 print(no_info)
                 time.sleep(5)
-                
+
         else:
             already_connected = "A session is already oppened."
 
@@ -126,4 +221,4 @@ class Database_handler:
             print(already_connected)
             time.sleep(5)
 
-        return
+        return(self.connection)

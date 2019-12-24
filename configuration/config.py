@@ -25,5 +25,5 @@ class Config:
         "major" : 1,    # very important changes
         "medium" : 0,   # feature changes
         "minor" : 0,    # minor changes
-        "submin" : 8    # file changes
+        "submin" : 11    # file changes
     }

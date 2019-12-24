@@ -11,6 +11,8 @@ Last update : 24/12/19 (DrLarck)
 """
 
 # dependancies
+import time
+
 from configuration.config import Config
 from utility.display import Util_display
 from utility.database_handler import Database_handler
@@ -74,7 +76,19 @@ class Main:
         while not stop:
             self.display.clear_display()
             print(menu_display)
-            database_handler.connect()
+
+            # try to connect a database
+            database_co = None
+
+            while database_co is None:
+                self.display.clear_display()
+                database_handler.get_db_info()
+                database_co = database_handler.connect()
+
+            if(database_co != None):
+                self.display.clear_display()
+                print(f"Connected to {database_handler.name} as {database_handler.user}")
+                time.sleep(5)
 
         return
 
